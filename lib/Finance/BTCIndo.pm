@@ -89,6 +89,8 @@ sub tapi {
     my $decoded;
     eval { $decoded = $self->{_json}->decode($res->{content}) };
     die "Can't decode response from $url: $@" if $@;
+    die "API response not a hash: $decoded" unless ref $decoded eq 'HASH';
+    die "API response is not success: $decoded->{error}" unless $decoded->{success};
     $decoded;
 }
 
