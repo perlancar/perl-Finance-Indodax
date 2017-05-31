@@ -462,3 +462,6 @@ Either "buy" or "sell".
 
 API documentation,
 L<https://blog.bitcoin.co.id/wp-content/uploads/2014/03/API-Documentation-Bitcoin.co_.id_.pdf>
+
+CLI that uses this module, for more convenience daily usage on the command-line:
+L<btcindo> (from L<App::btcindo> distribution).
