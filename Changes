@@ -1,3 +1,13 @@
+0.002   2017-05-31 (PERLANCAR)
+
+	- Avoid perl undef warning.
+
+	- Fix API method name TransHistory -> transHistory (wrong
+	  bitcoin.co.id documentation).
+
+	- Handle (die) when API return non-success.
+
+
 0.001   2017-05-31 (PERLANCAR)
 
         - First release.
