@@ -128,7 +128,7 @@ sub get_info {
 
 sub get_tx_history {
     my ($self, %args) = @_;
-    $self->tapi("TransHistory");
+    $self->tapi("transHistory");
 }
 
 sub get_trade_history {
@@ -357,7 +357,7 @@ Arguments:
 =head2 get_tx_history
 
 This method give information about history of deposit and withdraw. The API
-method name is C<TransHistory>.
+method name is C<transHistory>.
 
 Arguments:
 
