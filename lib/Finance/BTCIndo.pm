@@ -66,8 +66,9 @@ sub tapi {
 
     my $encoded_form = join(
         "&",
-        map { $self->{_urienc}->encode($_) . "=" .
-                  $self->{_urienc}->encode($form->{$_}) } sort keys(%$form),
+        map { $self->{_urienc}->encode($_ // ''). "=" .
+                  $self->{_urienc}->encode($form->{$_} // '') }
+            sort keys(%$form),
     );
 
     my $options = {
