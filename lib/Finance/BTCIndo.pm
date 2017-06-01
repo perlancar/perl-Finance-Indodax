@@ -122,6 +122,16 @@ sub get_depth {
     $self->_get_json("$url_prefix/api/$args{pair}/depth");
 }
 
+sub get_price_history {
+    my ($self, %args) = @_;
+    $args{pair} //= "btc_idr";
+    $args{pair} =~ /\A\w{3}_\w{3}\z/
+        or die "Invalid pair: must be in the form of 'abc_xyz'";
+    # XXX since, end?
+
+    $self->_get_json("$url_prefix/api/$args{pair}/chartdata");
+}
+
 sub get_info {
     my ($self, %args) = @_;
     $self->tapi("getInfo");
@@ -253,6 +263,16 @@ sub cancel_order {
    ],
  }
 
+ my $prices = $btcindo->get_price_history();
+ # sample result:
+ {
+   chart => [
+     [1392397200000,8024000,8024000,7580000,7803000,5.90],  # 2014-02-15
+     [1392483600000,7803000,7934000,7257000,7303000,11.35], # 2014-02-16
+     ...
+   ],
+ }
+
  ## all the methods below requires API key & secret
 
  $btcinfo->get_info();
@@ -285,7 +305,7 @@ Constructor.
 
 =head2 get_ticker
 
-Public API.
+Public API. The API method name is C<ticker>.
 
 Arguments:
 
@@ -300,7 +320,7 @@ Optional, e.g. eth_btc. Default: btc_idr.
 
 =head2 get_trades
 
-Public API.
+Public API. The API method name is C<ticker>.
 
 Arguments:
 
@@ -315,7 +335,27 @@ Optional, e.g. eth_btc. Default: btc_idr.
 
 =head2 get_depth
 
-Public API.
+Public API. The API method name is C<ticker>.
+
+Arguments:
+
+=over
+
+=item * pair => str
+
+Optional, e.g. eth_btc. Default: btc_idr.
+
+=back
+
+
+=head2 get_price_history
+
+Public API (undocumented). The API method name is C<chartdata>.
+
+This function returns an array of records. Each record is an array with the
+following data:
+
+ [timestamp-in-unix-epoch, open, high, low, close]
 
 Arguments:
 
