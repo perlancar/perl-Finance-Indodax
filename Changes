@@ -1,3 +1,9 @@
+0.005   2017-06-03 (PERLANCAR)
+
+	- get_price_history(): add argument 'period' to allow getting all
+	  as well as daily data (using API chart_1d).
+
+
 0.004   2017-06-01 (PERLANCAR)
 
 	- Add method: get_price_history.
