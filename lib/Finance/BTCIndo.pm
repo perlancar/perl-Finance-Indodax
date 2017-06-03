@@ -127,9 +127,15 @@ sub get_price_history {
     $args{pair} //= "btc_idr";
     $args{pair} =~ /\A\w{3}_\w{3}\z/
         or die "Invalid pair: must be in the form of 'abc_xyz'";
-    # XXX since, end?
+    $args{period} //= 'day';
+    $args{period} =~ /\A(day|all)\z/
+        or die "Invalid period: must be day|all";
 
-    $self->_get_json("$url_prefix/api/$args{pair}/chartdata");
+    if ($args{period} eq 'all') {
+        $self->_get_json("$url_prefix/api/$args{pair}/chartdata");
+    } else {
+        $self->_get_json("$url_prefix/api/$args{pair}/chart_1d");
+    }
 }
 
 sub get_info {
@@ -350,7 +356,8 @@ Optional, e.g. eth_btc. Default: btc_idr.
 
 =head2 get_price_history
 
-Public API (undocumented). The API method name is C<chartdata>.
+Public API (undocumented). The API method name is either C<chartdata> or
+C<chart_1d>.
 
 This function returns an array of records. Each record is an array with the
 following data:
@@ -364,6 +371,11 @@ Arguments:
 =item * pair => str
 
 Optional, e.g. eth_btc. Default: btc_idr.
+
+=item * period => str (all|day, default: day)
+
+Specify period. C<all> means since exchange began operation (Feb 2014). C<day>
+means in the last ~24h.
 
 =back
 
