@@ -6,6 +6,7 @@ package Finance::BTCIndo;
 use 5.010001;
 use strict;
 use warnings;
+use Log::ger;
 
 use Digest::SHA qw(hmac_sha512_hex);
 use Time::HiRes qw(time);
@@ -41,12 +42,17 @@ sub new {
 sub _get_json {
     my ($self, $url) = @_;
 
+    log_trace("JSON API request: %s", $url);
+
     my $res = $self->{_http}->get($url);
     die "Can't retrieve $url: $res->{status} - $res->{reason}"
         unless $res->{success};
     my $decoded;
     eval { $decoded = $self->{_json}->decode($res->{content}) };
     die "Can't decode response from $url: $@" if $@;
+
+    log_trace("JSON API response: %s", $decoded);
+
     $decoded;
 }
 
@@ -63,6 +69,8 @@ sub tapi {
         # ms after 2015-01-01
         nonce => int(1000 * (time() - 1_420_045_200)),
     };
+
+    log_trace("TAPI request: %s", $form);
 
     my $encoded_form = join(
         "&",
