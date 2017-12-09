@@ -98,25 +98,31 @@ sub tapi {
     my $decoded;
     eval { $decoded = $self->{_json}->decode($res->{content}) };
     die "Can't decode response from $url: $@" if $@;
+
+    log_trace("TAPI response: %s", $decoded);
+
     die "API response not a hash: $decoded" unless ref $decoded eq 'HASH';
     die "API response is not success: $decoded->{error}" unless $decoded->{success};
     $decoded;
 }
 
+sub _check_pair {
+    my $pair = shift;
+    $pair =~ /\A(\w{3,5})_(\w{3,5})\z/
+        or die "Invalid pair: must be in the form of 'abc_xyz'";
+}
+
 sub get_ticker {
     my ($self, %args) = @_;
     $args{pair} //= "btc_idr";
-    $args{pair} =~ /\A\w{3}_\w{3}\z/
-        or die "Invalid pair: must be in the form of 'abc_xyz'";
-
+    _check_pair($args{pair});
     $self->_get_json("$url_prefix/api/$args{pair}/ticker");
 }
 
 sub get_trades {
     my ($self, %args) = @_;
     $args{pair} //= "btc_idr";
-    $args{pair} =~ /\A\w{3}_\w{3}\z/
-        or die "Invalid pair: must be in the form of 'abc_xyz'";
+    _check_pair($args{pair});
 
     $self->_get_json("$url_prefix/api/$args{pair}/trades");
 }
@@ -124,8 +130,7 @@ sub get_trades {
 sub get_depth {
     my ($self, %args) = @_;
     $args{pair} //= "btc_idr";
-    $args{pair} =~ /\A\w{3}_\w{3}\z/
-        or die "Invalid pair: must be in the form of 'abc_xyz'";
+    _check_pair($args{pair});
 
     $self->_get_json("$url_prefix/api/$args{pair}/depth");
 }
@@ -133,8 +138,7 @@ sub get_depth {
 sub get_price_history {
     my ($self, %args) = @_;
     $args{pair} //= "btc_idr";
-    $args{pair} =~ /\A\w{3}_\w{3}\z/
-        or die "Invalid pair: must be in the form of 'abc_xyz'";
+    _check_pair($args{pair});
     $args{period} //= 'day';
     $args{period} =~ /\A(day|all)\z/
         or die "Invalid period: must be day|all";
