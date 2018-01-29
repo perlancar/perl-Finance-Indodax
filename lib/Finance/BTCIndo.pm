@@ -385,6 +385,9 @@ Arguments:
 
 Optional, e.g. eth_btc. Default: btc_idr.
 
+Note: pairs other than "btc_idr" do not seem to be supported at this time (404
+response).
+
 =item * period => str (all|day, default: day)
 
 Specify period. C<all> means since exchange began operation (Feb 2014). C<day>
