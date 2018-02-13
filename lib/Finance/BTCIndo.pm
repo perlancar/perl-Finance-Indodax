@@ -137,7 +137,7 @@ sub get_depth {
 
 sub get_price_history {
     my ($self, %args) = @_;
-    $args{pair} //= "btc_idr";
+    $args{pair} //= "btc_idr"; # note: pair other than btc_idr does not seem to be supported
     _check_pair($args{pair});
     $args{period} //= 'day';
     $args{period} =~ /\A(day|all)\z/
