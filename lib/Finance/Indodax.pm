@@ -1,4 +1,4 @@
-package Finance::BTCIndo;
+package Finance::Indodax;
 
 # DATE
 # VERSION
@@ -11,7 +11,7 @@ use Log::ger;
 use Digest::SHA qw(hmac_sha512_hex);
 use Time::HiRes qw(time);
 
-my $url_prefix = "https://vip.bitcoin.co.id";
+my $url_prefix = "https://indodax.com";
 
 sub new {
     my ($class, %args) = @_;
@@ -216,23 +216,23 @@ sub cancel_order {
 }
 
 1;
-# ABSTRACT: Trade with bitcoin.co.id (VIP) using Perl
+# ABSTRACT: Trade with Indodax.com using Perl
 
 =head1 SYNOPSIS
 
- use Finance::BTCIndo;
+ use Finance::Indodax;
 
  # API key and secret are required unless you only want to access the public
- # API. They can be retrieved by logging into your VIP account and
+ # API. They can be retrieved by logging into your Indodax account and
 
- my $btcindo = Finance::BTCIndo->new(
+ my $indodax = Finance::Indodax->new(
      key    => 'Your API key',
      secret => 'Your API secret',
  );
 
  ## public API methods, these do not require API key & secret
 
- my $ticker = $btcindo->get_ticker();
+ my $ticker = $indodax->get_ticker();
  # sample result:
  {
    ticker => {
@@ -247,7 +247,7 @@ sub cancel_order {
    },
  }
 
- my $trades = $btcindo->get_trades();
+ my $trades = $indodax->get_trades();
  # sample result:
  [
    {
@@ -267,7 +267,7 @@ sub cancel_order {
    ... # about 148 more
  ]
 
- my $depths = $btcindo->get_depth();
+ my $depths = $indodax->get_depth();
  # sample result:
  {
    buy => [
@@ -282,7 +282,7 @@ sub cancel_order {
    ],
  }
 
- my $prices = $btcindo->get_price_history();
+ my $prices = $indodax->get_price_history();
  # sample result:
  {
    chart => [
@@ -294,25 +294,26 @@ sub cancel_order {
 
  ## all the methods below requires API key & secret
 
- $btcinfo->get_info();
+ $indodax->get_info();
 
- $btcinfo->get_tx_history();
+ $indodax->get_tx_history();
 
- $btcinfo->get_trade_history(pair => "btc_idr");
+ $indodax->get_trade_history(pair => "btc_idr");
 
  # create buy order of Rp 2,000,000 worth of bitcoins at price Rp 38,400,000/BTC
- $btcinfo->create_order(pair => "btc_idr", type => "buy" , price => "38400000", idr => "2000000");
+ $indodax->create_order(pair => "btc_idr", type => "buy" , price => "38400000", idr => "2000000");
 
  # create sell order of 0.01 BTC at price Rp 38,700,000/BTC
- $btcinfo->create_order(pair => "btc_idr", type => "sell", price => "38700000", btc => 0.01);
+ $indodax->create_order(pair => "btc_idr", type => "sell", price => "38700000", btc => 0.01);
 
- $btcinfo->cancel_order(type => "sell", order_id => 9038293);
+ $indodax->cancel_order(type => "sell", order_id => 9038293);
 
 
 =head1 DESCRIPTION
 
-L<https://bitcoin.co.id> is an Indonesian Bitcoin exchange. This module provides
-a Perl wrapper for bitcoin.co.id's Trade API.
+Indodax, L<https://www.indodax.com> (previously Bitcoin Indonesia,
+bitcoin.co.id) is an Indonesian Bitcoin exchange. This module provides a Perl
+wrapper for Indodax's Trade API.
 
 
 =head1 METHODS
@@ -400,15 +401,15 @@ means in the last ~24h.
 
 General method to call API methods. Syntax:
 
- $btcinfo->tapi($method, %args)
+ $indodax->tapi($method, %args)
 
 For example:
 
- $btcinfo->tapi("getInfo")
+ $indodax->tapi("getInfo")
 
 is equivalent to:
 
- $btcinfo->get_info()
+ $indodax->get_info()
 
 
 =head2 get_info
@@ -524,8 +525,7 @@ Either "buy" or "sell".
 
 =head1 SEE ALSO
 
-API documentation,
-L<https://blog.bitcoin.co.id/wp-content/uploads/2014/03/API-Documentation-Bitcoin.co_.id_.pdf>
+API documentation, L<https://vip.bitcoin.co.id/downloads/BITCOINCOID-API-DOCUMENTATION.pdf>
 
 CLI that uses this module, for more convenience daily usage on the command-line:
-L<btcindo> (from L<App::btcindo> distribution).
+L<indodax> (from L<App::indodax> distribution).
