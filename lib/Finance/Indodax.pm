@@ -184,6 +184,16 @@ sub get_open_orders {
     );
 }
 
+sub get_order {
+    my ($self, %args) = @_;
+    die "Please specify pair" unless $args{pair};
+    $self->tapi(
+        "getOrder",
+        pair     => $args{pair},
+        order_id => $args{order_id},
+    );
+}
+
 sub create_order {
     my ($self, %args) = @_;
     die "Please specify pair" unless $args{pair};
@@ -521,6 +531,21 @@ Either "buy" or "sell".
 =item * order_id => num (required)
 
 =back
+
+=head2 get_order
+
+Get information about a specific order. The API method name is C<getOrder>.
+
+Arguments:
+
+=over
+
+=item * pair => str (required)
+
+=item * order_id => num (required)
+
+=back
+
 
 
 =head1 SEE ALSO
