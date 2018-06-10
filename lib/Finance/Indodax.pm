@@ -197,18 +197,26 @@ sub get_order {
 sub create_order {
     my ($self, %args) = @_;
     die "Please specify pair" unless $args{pair};
+    my ($basecur, $quotecur) = $args{pair} =~ /(.+)_(.+)/ or die "Invalid pair syntax, please use BASE_QUOTE";
     die "Please specify type" unless $args{type};
     die "Type can only be buy/sell" unless $args{type} eq 'buy' || $args{type} eq 'sell';
     die "Please specify price" unless $args{price};
-    die "Please specify idr" if $args{type} eq 'buy'  && !defined($args{idr});
-    die "Please specify btc" if $args{type} eq 'sell' && !defined($args{btc});
+
+    # in indodax, when we buy we specify the amount/size in the quote currency,
+    # e.g. if pair is btc_idr we specify the amount in idr.
+    die "Please specify $quotecur" if $args{type} eq 'buy' && !defined($args{$quotecur});
+
+    # on the other hand, when we sell we specify the amount/size in the base
+    # currency, e.g. if pair is btc_idr we specify the amount in btc to sell.
+    die "Please specify $basecur" if $args{type} eq 'sell' && !defined($args{$basecur});
+
     $self->tapi(
         "trade",
         pair    => $args{pair},
         type    => $args{type},
         price   => $args{price},
-        (idr    => $args{idr}) x !!($args{type} eq 'buy'),
-        (btc    => $args{btc}) x !!($args{type} eq 'sell'),
+        ($quotecur => $args{$quotecur}) x !!($args{type} eq 'buy'),
+        ($basecur  => $args{$basecur} ) x !!($args{type} eq 'sell'),
     );
 }
 
