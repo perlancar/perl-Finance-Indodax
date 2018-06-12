@@ -177,10 +177,9 @@ sub get_trade_history {
 
 sub get_open_orders {
     my ($self, %args) = @_;
-    die "Please specify pair" unless $args{pair};
     $self->tapi(
         "openOrders",
-        pair    => $args{pair},
+        (pair    => $args{pair}) x !!$args{pair},
     );
 }
 
