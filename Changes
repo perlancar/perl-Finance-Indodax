@@ -1,56 +1,56 @@
-0.011   2018-06-13 (PERLANCAR)
+0.011   2018-06-13  Released-By: PERLANCAR
 
 	- [Bugfix] get_open_orders(): Do not require pair.
 
 
-0.010   2018-06-10 (PERLANCAR)
+0.010   2018-06-10  Released-By: PERLANCAR
 
 	- [Bugfix] Fix argument checking: when creating buy order, check
 	  the quote currency; when creating sell order, check the base
 	  currency.
 
 
-0.009   2018-06-10 (PERLANCAR)
+0.009   2018-06-10  Released-By: PERLANCAR
 
 	- Add API function: get_order.
 
 
-0.008   2018-04-06 (PERLANCAR)
+0.008   2018-04-06  Released-By: PERLANCAR
 
         - Rename dist/module from Finance-BTCIndo to Finance-Indodax.
 
 
-0.007   2017-12-09 (PERLANCAR)
+0.007   2017-12-09  Released-By: PERLANCAR
 
 	- Allow 4- & 5-character currency (e.g. DOGE or WAVES).
 
 	- Log JSON & TAPI request/response.
 
 
-0.006   2017-11-24 (PERLANCAR)
+0.006   2017-11-24  Released-By: PERLANCAR
 
         - Pass 'pair' argument to cancelOrder trade API function.
 
 
-0.005   2017-06-03 (PERLANCAR)
+0.005   2017-06-03  Released-By: PERLANCAR
 
 	- get_price_history(): add argument 'period' to allow getting all
 	  as well as daily data (using API chart_1d).
 
 
-0.004   2017-06-01 (PERLANCAR)
+0.004   2017-06-01  Released-By: PERLANCAR
 
 	- Add method: get_price_history.
 
 
-0.003   2017-05-31 (PERLANCAR)
+0.003   2017-05-31  Released-By: PERLANCAR
 
 	- No functional changes.
 
 	- [doc] Mention App::btcindo.
 
 
-0.002   2017-05-31 (PERLANCAR)
+0.002   2017-05-31  Released-By: PERLANCAR
 
 	- Avoid perl undef warning.
 
@@ -60,6 +60,6 @@
 	- Handle (die) when API return non-success.
 
 
-0.001   2017-05-31 (PERLANCAR)
+0.001   2017-05-31  Released-By: PERLANCAR
 
         - First release.
